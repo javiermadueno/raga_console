@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+    <services>
+
+        <service id="green.format" class="Symfony\Component\Console\Formatter\OutputFormatterStyle">
+            <argument>white</argument>
+            <argument>green</argument>
+            <argument type="collection">
+                <argument>bold</argument>
+            </argument>
+        </service>
+
+        <service id="console.formatter" class="Symfony\Component\Console\Formatter\OutputFormatter">
+            <argument>true</argument>
+            <argument type="collection">
+                <argument key="ok" type="service" id="green.format"/>
+            </argument>
+        </service>
+
+
+        <service id="console.output" class="Symfony\Component\Console\Output\ConsoleOutput">
+            <call method="setFormatter">
+                <argument type="service" id="console.formatter"/>
+            </call>
+        </service>
+
+        <service id="default.output" alias="console.output" />
+
+    </services>
+</container>
